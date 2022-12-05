@@ -12,9 +12,10 @@ import (
 
 func Routes(r fiber.Router, db database.Database, s3 *aws.S3Bucket, cache cache.Cache) {
 	authMiddleware := middleware.NewAuthMiddleware()
+	guestMiddleware := middleware.NewGuestMiddleware()
 	r.Post("/register", buildRegisterHandler(db))
-	r.Get("/:username", authMiddleware.Execute(), buildGetUserHandler(db))
-	r.Get("/:username/tweets", authMiddleware.Execute(), buildListUserTweetsHandler(db))
+	r.Get("/:username", guestMiddleware.Execute(), buildGetUserHandler(db))
+	r.Get("/:username/tweets", guestMiddleware.Execute(), buildListUserTweetsHandler(db))
 	r.Patch("/profile", authMiddleware.Execute(), buildUpdateUserHandler(db))
 	r.Patch("/profile_image", authMiddleware.Execute(), buildUpdateProfileImageHandler(db, s3))
 }

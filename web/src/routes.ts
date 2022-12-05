@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { store } from './store'
 import routes from './modules/routes'
-import requiresAuth from './guards/requiresAuth'
-import isAuthenticated from './guards/isAuthenticated'
+import { Action } from './modules/storeActionTypes'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -10,9 +9,14 @@ export const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (to.matched.some((route) => route.meta.requiresAuth)) {
-    await requiresAuth({ to, from, next, store })
-  } else {
-    await isAuthenticated({ to, from, next, store })
+  if (store.getters['accessToken']) {
+    await store.dispatch(Action.AuthActionTypes.REFRESH_AUTH_TOKEN)
+    await store.dispatch(Action.AuthActionTypes.GET_USER_DATA)
   }
+
+  if (to.matched.some((route) => route.meta.requiresAuth)) {
+    return store.getters['isLoggedIn'] ? next() : next({ path: '/login', query: { redirect: to.fullPath } })
+  }
+  return next()
 })
+

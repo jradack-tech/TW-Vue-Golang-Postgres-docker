@@ -219,7 +219,7 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div class="flex items-center justify-between w-full mt-2">
+        <div v-if="$store.getters.isLoggedIn" class="flex items-center justify-between w-full mt-2">
           <div
             class="
               flex

@@ -67,10 +67,12 @@ func (s *Server) ListenTLS(certFile string, keyFile string) {
 }
 
 func (s *Server) initMiddlewares() {
+	fmt.Println(config.GetString("", "*"))
+
 	s.webserver.Engine().Use(cors.New(cors.Config{
-		AllowOrigins:     config.GetString("APP_DOMAIN", "*"),
+		AllowOrigins:     config.GetString("", "*"),
 		AllowCredentials: true,
-		AllowHeaders:     "Content-Type",
+		AllowHeaders:     "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie",
 	}))
 
 	s.webserver.Engine().Use(helmet.New())

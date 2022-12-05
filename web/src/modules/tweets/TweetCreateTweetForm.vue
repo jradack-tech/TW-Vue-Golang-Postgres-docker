@@ -58,7 +58,6 @@ export default defineComponent({
         })
         tweetContent.value = ""
         await store.dispatch(Action.TweetsActionTypes.GET_TWEETS_FEED)
-        emit('loading', false)
         loading.value = false
         emit('loading', loading.value)
       } catch (error) {

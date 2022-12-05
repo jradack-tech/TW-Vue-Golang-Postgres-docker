@@ -20,6 +20,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.SET_ACCESS_TOKEN](state, payload) {
     state.accessToken = payload
+    localStorage.setItem('access-token', payload);
   },
   [MutationTypes.SET_USER_DATA](state, payload) {
     state.user = payload

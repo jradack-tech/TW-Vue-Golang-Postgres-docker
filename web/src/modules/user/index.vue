@@ -259,7 +259,7 @@ export default defineComponent({
     </div>
     <div class="mt-5 px-6">
       <button
-        v-show="isCurrentUser"
+        v-show="$store.getters.isLoggedIn && isCurrentUser"
         @click="showEditProfileDialog = true"
         class="
           float-right
@@ -278,7 +278,7 @@ export default defineComponent({
         Edit Profile
       </button>
       <button
-        v-show="!isCurrentUser && !profile.isFollowing"
+        v-show="$store.getters.isLoggedIn && !isCurrentUser && !profile.isFollowing"
         @click="followUserOrUnfollowUser"
         class="
           float-right
@@ -320,7 +320,7 @@ export default defineComponent({
         <span class="hidden group-hover:block">Unfollow</span>
       </button>
       <button
-        v-show="!isCurrentUser"
+        v-show="$store.getters.isLoggedIn && !isCurrentUser"
         class="
           float-right
           text-blue
@@ -338,7 +338,8 @@ export default defineComponent({
       >
         <IconEllipsisH />
       </button>
-      <div class="w-full flex flex-col space-y-4">
+      <div class="py-6"></div>
+      <div class="w-full flex flex-col space-y-5">
         <div class="w-full block mt-4">
           <h1 class="text-2xl font-bold dark:text-lightest">
             {{ profile.name }}

@@ -12,11 +12,12 @@ import (
 
 func Routes(r fiber.Router, db database.Database, s3 *aws.S3Bucket, cache cache.Cache) {
 	authMiddleware := middleware.NewAuthMiddleware()
+	guestMiddleware := middleware.NewGuestMiddleware()
 	r.Get("/feed", authMiddleware.Execute(), buildListTweetFeedHandler(db))
 	r.Get("/search", authMiddleware.Execute(), buildSearchTweetHandler(db))
-	r.Get("/:tweetID", authMiddleware.Execute(), buildGetTweetHandler(db))
+	r.Get("/:tweetID", guestMiddleware.Execute(), buildGetTweetHandler(db))
 	r.Post("/", authMiddleware.Execute(), buildCreateTweetHandler(db, s3))
-	r.Get("/:tweetID/replies", authMiddleware.Execute(), buildListTweetRepliesHandler(db))
+	r.Get("/:tweetID/replies", guestMiddleware.Execute(), buildListTweetRepliesHandler(db))
 	r.Post("/:tweetID/reply", authMiddleware.Execute(), buildCreateReplyHandler(db))
 	r.Post("/:tweetID/favorite", authMiddleware.Execute(), buildFavoriteTweetHandler(db))
 	r.Post("/:tweetID/retweet", authMiddleware.Execute(), buildRetweetHandler(db))

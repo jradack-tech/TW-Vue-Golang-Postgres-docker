@@ -25,6 +25,5 @@ tmp
 *.pem
 
 node_modules
-.yarn
 
 postgres.session.sql

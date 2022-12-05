@@ -336,6 +336,7 @@ export default defineComponent({
           </div>
         </div>
         <div
+          v-if="$store.getters.isLoggedIn"
           class="
             flex
             items-center

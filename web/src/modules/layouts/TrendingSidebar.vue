@@ -95,9 +95,7 @@ export default defineComponent({
       "
     >
       <div class="p-4">
-        <p class="text-lg font-bold dark:text-light">Please remember:</p>
-      </div>
-      <div class="p-4">
+        <br />
       <p class="text-sm leading-tight dark:text-lightest">
             Everything you write is publicly visible.
       </p> <br />
@@ -105,7 +103,7 @@ export default defineComponent({
             Be kind to each other.
       </p> <br />
       <p class="text-sm leading-tight dark:text-lightest">
-            This is an early prototype and many buttons aren't working yet.
+            This is an early prototype.
       </p> <br />
       </div>
 

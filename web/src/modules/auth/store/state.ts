@@ -16,7 +16,7 @@ export const state: State = {
   authStatus: {
     isLoggedIn: false,
   },
-  accessToken: '',
+  accessToken: localStorage.getItem('access-token') ?? '',
   user: {
     id: 0,
     name: '',

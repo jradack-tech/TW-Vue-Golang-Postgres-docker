@@ -177,7 +177,7 @@ export default defineComponent({
         />
       </button>-->
     </div>
-    <div class="lg:w-full relative">
+    <div v-if='$store.getters.isLoggedIn' class="lg:w-full relative">
       <button
         @click="showDropdown = !showDropdown"
         class="

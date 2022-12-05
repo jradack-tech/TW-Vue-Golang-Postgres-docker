@@ -5,6 +5,8 @@ const apiURL: string = process.env.API_URL
   ? process.env.API_URL
   : 'http://localhost:8000'
 
+console.log(apiURL)
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
