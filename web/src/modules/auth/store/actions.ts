@@ -26,9 +26,24 @@ export type Actions = {
   [ActionTypes.LOGOUT_USER]({
     commit,
   }: AugmentedActionContext<Mutations, State>): Promise<void>
+  [ActionTypes.RESET_PASSWORD]({
+    commit,
+  }: AugmentedActionContext<Mutations, State>): Promise<void>
 }
 
 export const actions: ActionTree<State, State> & Actions = {
+  async [ActionTypes.RESET_PASSWORD]({ commit }, payload): Promise<void> {
+    try {
+      const response = await axios.post<{ success: boolean }>(
+        '/auth/reset',
+        {
+          email: payload.email,
+        }
+      )
+    } catch (error) {
+      
+    }
+  },
   async [ActionTypes.AUTHENTICATE_USER]({ commit }, payload): Promise<void> {
     try {
       const response = await axios.post<{ access_token: string }>(

@@ -72,7 +72,7 @@ func (s *Server) initMiddlewares() {
 	s.webserver.Engine().Use(cors.New(cors.Config{
 		AllowOrigins:     config.GetString("", "*"),
 		AllowCredentials: true,
-		AllowHeaders:     "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cookie",
+		AllowHeaders:     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 	}))
 
 	s.webserver.Engine().Use(helmet.New())

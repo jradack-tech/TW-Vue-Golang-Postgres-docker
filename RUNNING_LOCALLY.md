@@ -12,10 +12,25 @@ Here you will understand how to run and setup the development environment for tw
 
 Create .env file in `configs/` directory by copying `configs/.env.example` and setup the environment variables
 
-Login into the postgres service container's terminal and set a password for the postgres user that matches the DB_PASSWORD env variable
-
 - Running the containers with `docker-compose up -d`
 - To stop the containers `docker-compose stop`
+
+Login into the postgres service container's terminal and set a password for the postgres user that matches the DB_PASSWORD env variable. You can do this by accessing docker's terminal on the db service, then running:
+
+- `psql -U postgres` 
+- `ALTER USER postgres WITH PASSWORD 'postgres';`
+
+Restart your `rest` docker's service.
+
+If the `web` service is not working simply run the vite server directly:
+
+Navigate to `/web`
+
+- Create an `.env` file based on the `.env.example` file located at `/web/.env.example`
+- Run `yarn` to install the dependencies
+- Run `yarn dev` to run the frontend
+
+NOTE: Proven to work with node version: `14.18.1` use `nvm` if you need to install this version directly. [NVM](https://github.com/nvm-sh/nvm)
 
 ## 2. Manually
 
@@ -125,6 +140,7 @@ $ make dev
 
 Navigate to `/web`
 
+- Create an `.env` file based on the `.env.example` file located at `/web/.env.example`
 - Run `yarn` to install the dependencies
 - Run `yarn dev` to run the frontend
 

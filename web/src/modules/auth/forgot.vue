@@ -5,9 +5,10 @@ import IconTwitter from '../../icons/IconTwitter.vue'
 import LoadingSpinner from '../../shared/LoadingSpinner.vue'
 import { useStore } from '../../store'
 import { Action } from '../storeActionTypes'
+import { resetPassword } from './service'
 
 export default defineComponent({
-  name: 'Login',
+  name: 'Forgot',
   components: {
     IconTwitter,
     LoadingSpinner,
@@ -18,28 +19,21 @@ export default defineComponent({
     const router = useRouter()
 
     const email = ref('')
-    const password = ref('')
     const loading = ref(false)
+    const message = ref("")
 
-    const input = reactive({ email, password })
+    const input = reactive({ email })
 
     const inputEmpty = computed(
-      () => input.email === '' || input.password === ''
+      () => input.email === ''
     )
 
-    async function authenticate() {
+    async function handleResetPassword() {
       loading.value = true
-      await store.dispatch(Action.AuthActionTypes.AUTHENTICATE_USER, input)
-      loading.value = false
-      if (store.getters['isLoggedIn']) {
-        if (route.query && route.query.redirectTo) {
-          router.push(route.query.redirectTo as string)
-        } else {
-          router.push('/home')
-        }
-      }
+      const response = await resetPassword(email.value)
+      console.log(response)
     }
-    return { input, loading, authenticate, inputEmpty }
+    return { input, loading, handleResetPassword, inputEmpty }
   },
 })
 </script>
@@ -61,9 +55,9 @@ export default defineComponent({
     <div>
       <IconTwitter :size="60" class="h-12 w-12 text-blue" />
       <h1 class="pt-12 text-4xl dark:text-lightest font-bold">
-        Log in to T2
+        Forgot Password
       </h1>
-      <form @submit.prevent="authenticate" class="w-full text-center">
+      <form @submit.prevent="handleResetPassword" class="w-full text-center">
         <input
           v-model="input.email"
           type="text"
@@ -86,31 +80,10 @@ export default defineComponent({
             duration-75
           "
         />
-        <input
-          v-model="input.password"
-          type="password"
-          placeholder="Password"
-          class="
-            w-full
-            px-2
-            py-4
-            mb-6
-            border-2 border-lighter
-            text-xl
-            rounded
-            dark:border-dark
-            focus:outline-none
-            dark:bg-black
-            dark:text-light
-            focus:border-blue
-            dark:focus:border-blue
-            transition-colors
-            duration-75
-          "
-        />
+        <label>If your email matches our records, we will send you a password reset link.</label>
         <button
           type="submit"
-          class="bg-blue rounded-full focus:outline-none w-full h-auto p-4"
+          class="bg-blue rounded-full focus:outline-none w-full h-auto p-4 mt-4"
           :class="
             inputEmpty
               ? 'cursor-not-allowed'
@@ -119,16 +92,16 @@ export default defineComponent({
           :disabled="inputEmpty"
         >
           <LoadingSpinner v-if="loading" color="white" size="36px" />
-          <span v-else class="text-lightest text-lg font-semibold">Log in</span>
+          <span v-else class="text-lightest text-lg font-semibold">Send password reset email</span>
         </button>
-        <div>
-          <router-link to="/">
-            <span class="text-blue">Sign up for T2</span>
+        <div class="mt-4">
+          <router-link to="/login">
+            <span class="text-blue">Log into T2</span>
           </router-link>
         </div>
-        <div>
-          <router-link to="/reset">
-            <span class="text-blue">Forgot your password?</span>
+        <div class="mt-2">
+          <router-link to="/">
+            <span class="text-blue">Sign up for T2</span>
           </router-link>
         </div>
       </form>

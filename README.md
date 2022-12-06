@@ -10,10 +10,24 @@
 
 # Developer instructions
 
-TODO(poncianodiego): Please fill in instructions on:
-* what branches to use ("develop" for feature branch PRs, main initially for deployment)
-* Husky - what tags to use for commits
-* A quick summary of how the app deploys to the cloud (the app runs in Docker locally, and deploys to ECS [like this](https://www.docker.com/blog/docker-compose-from-local-to-amazon-ecs/))
+## Git Workflow
+
+- Create your feature or hotfix branch followed by a descriptive yet simple and concise name, see examples belog:
+
+  `feature/signup`
+  `hotfix/signup-email-error`
+
+- Once you complete your work push your branch and create a Pull Request to the `develop` branch.
+
+- Never push to `develop` or `main` branches directly.
+
+## Cloud Deployment (Informational Only)
+
+- The server will deploy automatically when the `develop` or `main` branches are updated, deploying to `beta.t2.social` and `t2.social` respectively
+  - Server is running on an EC2 instance directly (no docker)
+  - The front end is behind a nginx site
+  - The backend is behind an nginx proxy configuration to enable SSL and proper communication with the front end
+- In the future we will set up a completely different workflow and architecture using Amazon ECS similar to: https://www.docker.com/blog/docker-compose-from-local-to-amazon-ecs/
 
 # Linear task list
 

@@ -12,9 +12,19 @@ import (
 func Routes(r fiber.Router, db database.Database, cache cache.Cache) {
 	authMiddleware := middleware.NewAuthMiddleware()
 	r.Post("/login", buildLoginHandler(db))
+	r.Post("/reset", buildResetHandler(db))
 	r.Get("/me", authMiddleware.Execute(), buildMeHandler(db))
 	r.Get("/token", buildTokenHandler(db, cache))
 	r.Post("/logout", buildLogoutHandler(cache))
+}
+
+func buildResetHandler(db database.Database) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		service := service.NewResetService(db)
+		action := action.NewResetAction(service)
+
+		return action.Execute(c)
+	}
 }
 
 func buildLoginHandler(db database.Database) fiber.Handler {
